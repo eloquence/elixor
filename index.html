@@ -35,10 +35,11 @@
 </head>
 <script src="js/jquery.min.js"></script>
 <body>
-Universe: <button id="prev" accesskey="L">&lt;&lt;</button> <input id="current" type="text" size="4"> <button id="next" accesskey="R">&gt;&gt;</button>
+Universe: <button id="prev" accesskey="J">&lt;&lt;</button> <input id="current" type="text" size="4"> <button id="next" accesskey="K">&gt;&gt;</button>
 FPS: <button id="slower">&lt;&lt;</button> <input id="fps" type="text" size="2"></input> <button id="faster">&gt;&gt;</button>
 <button id="pause" accesskey="p"><U>P</U>ause</button> New universes: <label><input type="checkbox" checked id="u1"> 1L</label> <label><input type="checkbox" checked id="u2"> 1R</label> <label><input type="checkbox" checked id="u3"> 2L</label> <label><input type="checkbox" checked id="u4"> 2R</label>
-
+<button id="randomize" accesskey="r"><U>R</u>andomize all</button>
+<button id="reboot" accesskey="b">Re<u>b</u>oot</button>
 <br><br>
 
 <div id="universes">
@@ -49,8 +50,8 @@ FPS: <button id="slower">&lt;&lt;</button> <input id="fps" type="text" size="2">
 
 <h2> What's going on here? </h2>
 <p>
-There are no random numbers or complex formulas involved. Just 0, 1, XOR,
-and the universe size. You could do this in your head. :-)
+There are no random numbers (unless you randomize!) or complex formulas involved.
+Just 0, 1, XOR, and the universe size. You could do this in your head. :-)
 <p>
 The XOR operator converts two binary inputs into a single output. The output is
 1 if <em>only</em> one of the two inputs is 1, otherwise it is 0. The operation
@@ -64,7 +65,13 @@ four universes can be connected to copies of itself on all sides, ad infinitum.
 We display as many lines as our universe size, then refresh. But at any point in time,
 the state of universe 249L1 is really just represented in 249 bits!
 You can check its state by looking at the <code>multiverse</code>
-variable in your developer console. Randomize the contents and see what happens!
+variable in your developer console.
+<p>
+When you randomize, each of the universe arrays gets assigned a sequence of
+random 0s and 1s. In some universes, this will put you in a state that's
+otherwise unreachable -- in others it is just part of their natural cycle.
+You may notice that large-scale patterns tend to disappear while small-scale
+behavioral differences remain.
 <p>
 All universes repeat not just in space but also in time. When they start repeating varies. The contents of
 the ring appear to repeat at minimum at <em>universe size</em><sup>3</sup> (for any universe with

@@ -69,6 +69,19 @@ var multiverse = []; // made globally visible so we can poke at it
     $('#pause').click(function() {
       paused = !paused;
     });
+
+    $('#randomize').click(function() {
+      multiverse.forEach(function(universe) {
+        universe.data.forEach(function(ele, ind, arr) {
+          arr[ind] = Math.round(Math.random());
+        });
+
+      });
+    });
+
+    $('#reboot').click(function() {
+      $('#current').blur();
+    });
   }
 
 
