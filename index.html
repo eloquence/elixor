@@ -62,6 +62,9 @@ four different universe patterns for any ring size. Four because we can vary
 movement direction and comparison direction. Note the symmetries -- any of the
 four universes can be connected to copies of itself on all sides, ad infinitum.
 <p>
+The seed value of the ring is irrelevant -- it is set to 1 here; if it was set
+to 0 we would have to use XNOR instead of XOR, but the result would be the same.
+<p>
 We display as many lines as our universe size, then refresh. But at any point in time,
 the state of universe 249L1 is really just represented in 249 bits!
 You can check its state by looking at the <code>multiverse</code>
