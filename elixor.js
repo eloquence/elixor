@@ -121,8 +121,6 @@ var multiverse = []; // made globally visible so we can poke at it
   function makeUniverse(universe) {
     index++;
     universe.index = index;
-    universe.run = 0;
-    universe.lines = 0;
     var size = universe.size;
     var linebreak = universe.linebreak ? ' linebreak' : '';
     $('#universes').append('<div class="container' + linebreak + '" id="container' + index + '"><canvas id="universe' + index + '" width="' + size + '" height="' + size + '"></canvas><br></div>');
