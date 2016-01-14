@@ -11,11 +11,6 @@
     margin-right: 2em;
     font-family: sans;
   }
-  .oscillationDetected {
-    border-style: solid;
-    border-width: 2px;
-    border-color: red;
-  }
   .container {
     background: white;
     display: inline-flex;
@@ -37,9 +32,12 @@
 <body>
 Universe: <button id="prev" accesskey="J">&lt;&lt;</button> <input id="current" type="text" size="4"> <button id="next" accesskey="K">&gt;&gt;</button>
 FPS: <button id="slower">&lt;&lt;</button> <input id="fps" type="text" size="2"></input> <button id="faster">&gt;&gt;</button>
-<button id="pause" accesskey="p"><U>P</U>ause</button> New universes: <label><input type="checkbox" checked id="u1"> 1L</label> <label><input type="checkbox" checked id="u2"> 1R</label> <label><input type="checkbox" checked id="u3"> 2L</label> <label><input type="checkbox" checked id="u4"> 2R</label>
-<button id="randomize" accesskey="r"><U>R</u>andomize all</button>
+<button id="pause" accesskey="p"><U>P</U>ause</button>
+<button id="randomize" accesskey="r" title="Assign random numbers to each universe array"><U>R</u>andomize all</button>
 <button id="reboot" accesskey="b">Re<u>b</u>oot</button>
+
+New universes: <label><input type="checkbox" checked id="u1"> 1L</label> <label><input type="checkbox" checked id="u2"> 1R</label> <label><input type="checkbox" checked id="u3"> 2L</label> <label><input type="checkbox" checked id="u4"> 2R</label>
+<label title="Remove the four universe limit"><input type="checkbox" id="godmode" accesskey="g"><u>G</u>od mode</label>
 <br><br>
 
 <div id="universes">
