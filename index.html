@@ -4,6 +4,25 @@
   <meta charset=utf-8>
   <title>elixor - the universes of xor</title>
   <style>
+  #header {
+    font-size: small;
+  }
+  @media all and (min-width: 1100px) {
+    #subheader {
+      float:right;
+    }
+  }
+  button, input {
+    background: black;
+    color: white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc;
+    text-align: center;
+  }
+  button:focus, input:focus {
+    border-color: #666;
+  }
   body {
     background: #001;
     color: white;
@@ -19,33 +38,35 @@
   .linebreak {
     clear: left;
   }
-  .footer {
-    font-size: small;
-  }
   a {
     color: #ccc;
+  }
+  #footer {
+    font-size: small;
     font-family: monospace;
   }
   </style>
 </head>
 <script src="js/jquery.min.js"></script>
+<script src="js/Uri.min.js"></script>
 <body>
-Universe: <button id="prev" accesskey="J">&lt;&lt;</button> <input id="current" type="text" size="4"> <button id="next" accesskey="K">&gt;&gt;</button>
+<div id="header">
+<span id="universeLabel">Universe</span>: <button id="prev" accesskey="J">&lt;&lt;</button> <input id="current" type="text" size="4"> <button id="next" accesskey="K">&gt;&gt;</button>
 FPS: <button id="slower">&lt;&lt;</button> <input id="fps" type="text" size="2"></input> <button id="faster">&gt;&gt;</button>
 <button id="pause" accesskey="p"><U>P</U>ause</button>
 <button id="randomize" accesskey="r" title="Assign random numbers to each universe array"><U>R</u>andomize all</button>
 <button id="reboot" accesskey="b">Re<u>b</u>oot</button>
-
-New universes: <label><input type="checkbox" checked id="u1"> 1L</label> <label><input type="checkbox" checked id="u2"> 1R</label> <label><input type="checkbox" checked id="u3"> 2L</label> <label><input type="checkbox" checked id="u4"> 2R</label>
+<div id="subheader">
+New universes: <label><input type="checkbox" checked id="1l"> 1L</label> <label><input type="checkbox" checked id="1r"> 1R</label> <label><input type="checkbox" checked id="2l"> 2L</label> <label><input type="checkbox" checked id="2r"> 2R</label>
 <label title="Remove the four universe limit"><input type="checkbox" id="godmode" accesskey="g"><u>G</u>od mode</label>
-<br><br>
-
+</div>
+</div>
+<br clear="all">
 <div id="universes">
 
 </div>
-
 <br clear="all">
-
+<div id="text">
 <h2> What's going on here? </h2>
 <p>
 There are no random numbers (unless you randomize!) or complex formulas involved.
@@ -77,7 +98,8 @@ behavioral differences remain.
 All universes repeat not just in space but also in time. When they start repeating varies. The contents of
 the ring appear to repeat at minimum at <em>universe size</em><sup>3</sup> (for any universe with
 a size that is a power of 2), and at maximum at 2<sup><em>universe size</em></sup>.
-<p>
+</div>
+<div id="footer">
 <a href="http://github.com/eloquence/elixor">github</a>
 </div>
 <script src="elixor.js"></script>

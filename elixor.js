@@ -4,15 +4,76 @@ var multiverse = []; // made globally visible so we can poke at it
   'use strict';
   var index = 0; // keeps track of all universes ever made
   var fps = 30;
-  var initialUniverse = 249;
   var paused = false;
   var godmode = false;
+  var defaultSize = 249; // if no query is specified
+  var settings = getInitialSettings();
 
+  makeUniverseGrid();
   setupEvents();
-  $('#current').val(initialUniverse);
-  $('#current').blur();
+  $('#current').val(settings.size);
   $('#fps').val(fps);
+  updateLink();
   updateMultiverse();
+
+  function makeUniverseGrid() {
+    if (settings.size === undefined && Array.isArray(settings.data))
+      settings.size = settings.data.length;
+
+    var uc = 0;
+
+    ['1l', '1r', '2l', '2r'].forEach(function(variant) {
+
+      // Set checkboxes
+      $('#' + variant).prop('checked', settings[variant]);
+
+      // Create the universe(s)
+      if (settings[variant]) {
+        var universe = {};
+        universe.size = settings.size;
+        universe.data = settings.data;
+        uc++;
+        setVariant(universe, variant);
+        if (!godmode)
+          universe.linebreak = uc === 3 ? true : false;
+        makeUniverse(universe);
+      }
+    });
+  }
+
+  function setVariant(universe, type) {
+    switch (type) {
+      case '1l':
+        universe.moveLeft = false;
+        universe.compareRight = false;
+        break;
+      case '1r':
+        universe.moveLeft = true;
+        universe.compareRight = true;
+        break;
+      case '2l':
+        universe.moveLeft = true;
+        universe.compareRight = false;
+        break;
+      case '2r':
+        universe.moveLeft = false;
+        universe.compareRight = true;
+        break;
+    }
+  }
+
+  function updateLink() {
+    if ($('#universeLink').length)
+      $('#universeLabel').unwrap();
+    var uri = new Uri(window.location.href);
+    uri.setQuery('');
+    ['1l', '1r', '2l', '2r'].forEach(function(variant) {
+        if (settings[variant])
+          uri.addQueryParam(variant, null);
+    });
+    uri.addQueryParam('size', settings.size);
+    $('#universeLabel').wrap('<a href="' + uri.toString() + '" id="universeLink">');
+  }
 
   function setupEvents() {
     $('#prev').click(function() {
@@ -31,9 +92,13 @@ var multiverse = []; // made globally visible so we can poke at it
     });
 
     $('#current').blur(function() {
-      if (!godmode)
+      settings.size = Number($(this).val());
+      settings.data = undefined;
+      if (!godmode) {
         cleanUp();
-      makeUniverseGrid(Number($(this).val()));
+        updateLink();
+      }
+      makeUniverseGrid();
     });
 
     $('#current').keyup(function(e) {
@@ -91,44 +156,48 @@ var multiverse = []; // made globally visible so we can poke at it
     $('#godmode').click(function() {
         godmode = $(this).is(':checked');
         cleanUp();
+        if (godmode)
+          $('#universeLabel').unwrap();
         $('#current').blur();
+    });
+
+    $('#1l,#1r,#2l,#2r').click(function() {
+      settings[$(this).attr('id')] = $(this).is(':checked');
     });
 
   }
 
+  function getInitialSettings() {
+    var rv = {};
+    var uri = new Uri(window.location.search);
 
-  function makeUniverseGrid(size) {
-    if($('#u1').is(':checked')) {
-      makeUniverse({
-        size: size,
-        moveLeft: false,
-        compareRight: false
-      });
+    var queryData = uri.getQueryParamValue('data');
+    var querySize = Number(uri.getQueryParamValue('size'));
+    if (queryData !== undefined && queryData.match(/[^0-1]/g) === null) {
+      rv.size = queryData.length;
+      rv.data = queryData.split('');
+    } else if (querySize > 0) {
+      rv.size = querySize;
+    } else {
+      rv.size = defaultSize;
     }
-    if($('#u2').is(':checked')) {
-      makeUniverse({
-        size: size,
-        moveLeft: true,
-        compareRight: true
-      });
-    }
-    var linebreak = !$('#godmode').is(':checked');
-    if($('#u3').is(':checked')) {
-      makeUniverse({
-        size: size,
-        moveLeft: true,
-        compareRight: false,
-        linebreak: linebreak
-      });
-    }
-    if($('#u4').is(':checked')) {
-      makeUniverse({
-        size: size,
-        moveLeft: false,
-        compareRight: true
-      });
-    }
+
+    // Which universes to show, query string has format 1l&2l, etc., without
+    // assignment
+    var vq = [uri.getQueryParamValue('1l') === null, uri.getQueryParamValue('1r') === null,
+    uri.getQueryParamValue('2l') === null, uri.getQueryParamValue('2r') === null];
+
+    // By default we sow all of them
+    if (vq.indexOf(true) === -1)
+      vq = [true, true, true, true];
+
+    rv['1l'] = vq[0];
+    rv['1r'] = vq[1];
+    rv['2l'] = vq[2];
+    rv['2r'] = vq[3];
+    return rv;
   }
+
 
   function makeUniverse(universe) {
     index++;
@@ -150,7 +219,8 @@ var multiverse = []; // made globally visible so we can poke at it
     }
 
     $('#universes').append('<div class="container' + linebreak + '" id="container' + index + '"' + title + '><canvas id="universe' + index + '" width="' + size + '" height="' + size + '"></canvas><br></div>');
-    universe.data = [];
+    if (universe.data === undefined)
+      universe.data = [];
     multiverse.push(universe);
   }
 
