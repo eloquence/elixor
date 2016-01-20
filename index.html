@@ -45,6 +45,9 @@
     font-size: small;
     font-family: monospace;
   }
+  #ECA {
+    background: #ccc;
+  }
   </style>
 </head>
 <script src="js/jquery.min.js"></script>
@@ -96,9 +99,18 @@ You may notice that large-scale patterns tend to disappear while small-scale
 behavioral differences remain.
 <p>
 All universes repeat not just in space but also in time. When they start repeating varies. The contents of
-the ring appear to repeat at minimum at <em>universe size</em><sup>3</sup> (for any universe with
+the ring appear to repeat at minimum at <em>universe size</em><sup>2</sup> (for any universe with
 a size that is a power of 2), and at maximum at 2<sup><em>universe size</em></sup>.
+<p>
+You can compare the results with an elementary cellular automaton of the same size by
+adding <code>?ECA=&lt;0-255</code> to the URL, e.g. <a href="index.html?ECA=60&amp;2l">rule 60</a>.
+Rule 60 is the closest to the type 2 universes shown here, but has a typically much shorter
+cycle length.
+</body>
+</body>
+
 </div>
+
 <div id="footer">
 <a href="http://github.com/eloquence/elixor">github</a>
 </div>
